@@ -1,257 +1,602 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>أذكار | الصباح والمساء</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --surface: #13161e;
+      --card: #1a1e2a;
+      --border: #2a2f3f;
+      --gold: #c9a84c;
+      --gold-light: #e8c96a;
+      --gold-dim: rgba(201,168,76,0.15);
+      --text: #e8e0d0;
+      --text-muted: #8a8070;
+      --green: #4a8c6a;
+      --green-light: #6ab890;
+    }
 
-<meta name="auther" content="mohamed saeed">
-<meta name="keywords" content="اسماء الله الحسنى">
-<meta name="description" content="وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَى فَادْعُوهُ بِهَا وَذَرُوا الَّذِينَ يُلْحِدُونَ فِي أَسْمَائِهِ">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>99اسم من اسماء الله الحسنى</title>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Naskh Arabic', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Stars background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(201,168,76,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 80%, rgba(201,168,76,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 15%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 60%, rgba(201,168,76,0.2) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 35%, rgba(255,255,255,0.2) 0%, transparent 100%),
+        radial-gradient(1px 1px at 20% 50%, rgba(255,255,255,0.15) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 90%, rgba(201,168,76,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 45% 70%, rgba(255,255,255,0.2) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 10%, rgba(201,168,76,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 90%, rgba(255,255,255,0.1) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Header */
+    header {
+      position: relative;
+      text-align: center;
+      padding: 60px 20px 40px;
+      z-index: 1;
+    }
+
+    .moon-icon {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 10px;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    header h1 {
+      font-family: 'Amiri', serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: var(--gold);
+      text-shadow: 0 0 30px rgba(201,168,76,0.4);
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
+    .divider {
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 20px auto 0;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      padding: 30px 20px 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tab-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 12px 36px;
+      border-radius: 50px;
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tab-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold-dim);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tab-btn:hover::before { opacity: 1; }
+
+    .tab-btn.active {
+      background: var(--gold-dim);
+      border-color: var(--gold);
+      color: var(--gold-light);
+      box-shadow: 0 0 20px rgba(201,168,76,0.2);
+    }
+
+    /* Content */
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px 20px 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section { display: none; }
+    .section.active { display: block; animation: fadeIn 0.5s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .section-title::before,
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border));
+    }
+
+    .section-title::after {
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    /* Zikr Card */
+    .zikr-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 16px;
+      position: relative;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .zikr-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--gold), transparent);
+      opacity: 0.5;
+    }
+
+    .zikr-card:hover {
+      border-color: rgba(201,168,76,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+
+    .zikr-number {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--gold-dim);
+      border: 1px solid rgba(201,168,76,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: var(--gold);
+    }
+
+    .zikr-text {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.1rem, 3vw, 1.4rem);
+      line-height: 2.2;
+      color: var(--text);
+      text-align: justify;
+      margin-bottom: 16px;
+    }
+
+    .zikr-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .zikr-count {
+      background: var(--gold-dim);
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+
+    .counter-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .counter-btn:hover {
+      border-color: var(--green);
+      color: var(--green-light);
+    }
+
+    .counter-btn.done {
+      border-color: var(--green);
+      color: var(--green-light);
+      background: rgba(74,140,106,0.1);
+    }
+
+    .counter-display {
+      font-size: 1rem;
+      font-weight: bold;
+      color: var(--gold);
+      min-width: 20px;
+      text-align: center;
+    }
+
+    /* Bismillah header */
+    .bismillah {
+      text-align: center;
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.3rem, 4vw, 2rem);
+      color: var(--gold);
+      opacity: 0.7;
+      margin-bottom: 30px;
+      letter-spacing: 3px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+  </style>
 </head>
 <body>
-   <h3 align="center">اسماءالله الحسنى وفضلها</h3> 
-<h3 align="center" >وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَى فَادْعُوهُ بِهَا وَذَرُوا الَّذِينَ يُلْحِدُونَ فِي أَسْمَائِهِ</h3>
-<hr>
-<p>وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَىٰ فَادْعُوهُ بِهَا ۖ وَذَرُوا الَّذِينَ يُلْحِدُونَ فِي أَسْمَائِهِ ۚ سَيُجْزَوْنَ مَا كَانُوا يَعْمَلُونَ (180) </p>
-<p>فقد روى البخاري ومسلم عن أبي هريرة رضي الله عنه أن النبي صلى الله عليه وسلم قال: إن لله تسعة وتسعين اسماً مائة إلا واحداً من أحصاها دخل الجنة، ورواه الترمذي، وزاد فيه تعيين الأسماء على النحو التالي: هُوَ اللهُ الَّذِي لَا إِلَهَ إِلَّا هُوَ الرَّحْمَنُ الرَّحِيمُ، الْمَلِكُ، الْقُدُّوسُ، السَّلَامُ، الْمُؤْمِنُ، الْمُهَيْمِنُ، الْعَزِيزُ، الْجَبَّارُ، الْمُتَكَبِّرُ، الْخَالِقُ، الْبَارِئُ، الْمُصَوِّرُ، الْغَفَّارُ، الْقَهَّارُ، الْوَهَّابُ، الرَّزَّاقُ، الْفَتَّاحُ، الْعَلِيمُ، الْقَابِضُ، الْبَاسِطُ، الْخَافِضُ، الرَّافِعُ، الْمُعِزُّ، الْمُذِلُّ، السَّمِيعُ، الْبَصِيرُ، الْحَكَمُ، الْعَدْلُ، اللَّطِيفُ، الْخَبِيرُ، الْحَلِيمُ، الْعَظِيمُ، الْغَفُورُ، الشَّكُورُ، الْعَلِيُّ، الْكَبِيرُ، الْحَفِيظُ، الْمُقِيتُ، الْحَسِيبُ، الْجَلِيلُ، الْكَرِيمُ، الرَّقِيبُ، الْمُجِيبُ، الْوَاسِعُ، الْحَكِيمُ، الْوَدُودُ، الْمَجِيدُ، الْبَاعِثُ، الشَّهِيدُ، الْحَقُّ، الْوَكِيلُ، الْقَوِيُّ، الْمَتِينُ، الْوَلِيُّ، الْحَمِيدُ، الْمُحْصِي، الْمُبْدِئُ، الْمُعِيدُ، الْمُحْيِي، الْمُمِيتُ، الْحَيُّ، الْقَيُّومُ، الْوَاجِدُ، الْمَاجِدُ، الْوَاحِدُ، الصَّمَدُ، الْقَادِرُ، الْمُقْتَدِرُ، الْمُقَدِّمُ، الْمُؤَخِّرُ، الْأَوَّلُ، الْآخِرُ، الظَّاهِرُ، الْبَاطِنُ، الْوَالِي، الْمُتَعَالِي، الْبَرُّ، التَّوَّابُ، الْمُنْتَقِمُ، الْعَفُوُّ، الرَّءُوفُ، مَالِكُ الْمُلْكِ ذُو الْجَلَالِ وَالْإِكْرَامِ، الْمُقْسِطُ، الْجَامِعُ، الْغَنِيُّ، الْمُغْنِي، الْمَانِعُ، الضَّارُّ، النَّافِعُ، النُّورُ، الْهَادِي، الْبَدِيعُ، الْبَاقِي، الْوَارِثُ، ‌الرَّشِيدُ، ‌الصَّبُورُ.</p>
-<p>الرَّحْمن: كثير الرحمة وهو اسم مقصور على الله عز وجل </p>
-<p>الرَّحِيم: هو المنعم أبدا، المتفضل دوما، فرحمته لا تنتهي</p>
-<p>المَلِك: هو الله، ملك الملوك، له الملك، وهو مالك يوم الدين، ومليك الخلق فهو المالك المطلق.</p>
-<p>الْقُدُّوس: هو الطاهر المنزه عن العيوب والنقائص وعن كل ما تحيط به العقول.</p>
-<p>السَّلَام: هو ناشر السلام بين الأنام وهو الذي سلمت ذاته من النقص والعيب والفنا</p>
-<p>المُؤْمِن: هو الذي سلم أوليائه من عذابه، والذي يصدق عباده ما وعدهم.</p>
-<p>الْمُهَيْمِن: هو الرقيب الحافظ لكل شيء، القائم على خلقه بأعمالهم، وأرزاقهم وآجالهم، والمطلع على خفايا الأمور وخبايا الصدور</p>
-<p>الْعَزِيز: هو المنفرد بالعزة، الظاهر الذي لا يقهر، القوي الممتنع فلا يغلبه شيء وهو غالب كل شيء.</p>
-<p>الْجَبَّار: هو الذي تنفذ مشيئته، ولا يخرج أحد عن تقديره، وهو القاهر لخلقه على ما أراد.</p>
-<p>الْمُتَكَبِّر: هو المتعالي عن صفات الخلق المنفرد بالعظمة والكبرياء.</p>
-<p>الْخَالِق: هو الفاطر المبدع لكل شيء، والمقدر له والموجد للأشياء من العدم، فهو خالق كل صانع وصنعته.</p>
-<p>الْبَارِئ: هو الذي خلق الخلق بقدرته لا عن مثال سابق، القادر على إبراز ما قدره إلى الوجود.</p>
-<p>الْمُصَوِّر: هو الذي صور جميع الموجودات، ورتبها فأعطى كل شيء منها صورة خاصة، وهيئة منفردة، يتميز بها على اختلافها وكثرتها.</p>
-<p>اَلْغَفَّار: هو وحده الذي يغفر الذنوب ويستر العيوب في الدنيا والآخرة.</p>
-<p>الْقَهَّار: هو الغالب الذي قهر خلقه بسلطانه وقدرته، وخضعت له الرقاب وذلت له الجبابرة، وصرف خلقه على ما أراد طوعا وكرها، وعنت الوجوه له.</p>
-<p>الْوَهَّاب: هو المنعم على العباد، الذي يهب بغير عوض ويعطي الحاجة بغير سؤال، كثير النعم، دائم العطاء.</p>
-<p>الرَّزَّاق: هو الذي خلق الأرزاق وأعطى كل الخلائق أرزاقها، ويمد كل كائن لما يحتاجه، ويحفظ عليه حياته ويصلحه.</p>
-<p>الْفَتَّاح: هو الذي يفتح مغلق الأمور، ويسهل العسير، وبيده مفاتيح السماوات والأرض.</p>
-<p>الْعَلِيم: هو الذي يعلم تفاصيل الأمور، ودقائق الأشياء وخفايا الضمائر، والنفوس، لا يعزب عنه مثقال ذرة، فعلمه يحيط بجميع الأشياء.</p>
-<p>الْقَابِضُ الْبَاسِطُ: هو الذي يقبض الرزق عمن يشاء من الخلق بعدله وحكمته، والذي يوسع الرزق لمن يشاء من عباده بجوده ورحمته فهو سبحانه القابض الباسط.</p>
-<p>الخافض* الرَّافِعُ: هو الذي يخفض الأذلال لكل من طغى وتجبر وخرج على شريعته وتمرد، وهو الذي يرفع عباده المؤمنين بالطاعات ويرفعهم على عدوهم فينصرهم وهو رافع السماوات السبع.</p>
-<p>المعز* المذل*: هو الذي يهب القوة والغلبة والشدة لمن شاء فيعزه، وينزعها عمن يشاء فيذله.</p>
-<p>السَّمِيعُ: ومعناه سمعه لجميع الأصوات الظاهرة والباطنة الخفية والجلية، وإحاطته التامة بها، ومعناه أيضًا: سمع الإجابة منه للسائلين والداعين والعابدين فيجيبهم ويثيبهم.</p>
-<p>الْبَصِير: هو الذي يرى الأشياء كلها ظاهرها وباطنها وهو المحيط بكل شيء علماً.</p>
-<p>الْحَكَم: هو الذي يفصل بين مخلوقاته بما شاء ويفصل بين الحق والباطل لا راد لقضائه ولا معقب لحكمه.</p>
-<p>العدل: هو الذي حرم الظلم على نفسه، وجعله على عباده محرما، فهو المنزه عن الظلم والجور في أحكامه وأفعاله الذي يعطي كل ذي حق حقه.
-</p>
-<p>اللَّطِيفُ: هو البر الرفيق بعباده، يرزق وييسر ويحسن إليهم، ويرفق بهم ويتفضل عليهم.
-</p>
-<p>الْخَبِيرُ: هو العليم بدقائق الأمور، لا تخفى عليه خافية، ولا يغيب عن علمه شيء فهو العالم بما كان ويكون.
-</p>
-<p>الْحَلِيمُ: هو الصبور الذي يمهل ولا يهمل، ويستر الذنوب، ويؤخر العقوبة، فيرزق العاصي كما يرزق المطيع.
-</p>
-<p>الْعَظِيمُ: هو العظيم في كل شيء، عظيم في ذاته وأسمائه وصفاته، عظيم في رحمته، عظيم في قدرته، عظيم في حكمته، عظيم في جبروته وكبريائه، عظيم في هبته وعطائه، عظيم في خبرته ولطفه، عظيم في بره وإحسانه، عظيم في عزته وعدله وحمده، فهو العظيم المطلق، فلا أحد يساويه، ولا عظيم يدانيه.
-</p>
-<p>الْغَفُورُ: هو الساتر لذنوب عباده المتجاوز عن خطاياهم وذنوبهم. الفرق بين هذا الاسم واسم الغفار أن اسم الغفور يكون للدلالة على مغفرة الذنب مهما عظم ويأس صاحبه من المغفرة أما الغفار فتدل على مغفرة الله المستمرة للذنوب المختلفة لأن الإنسان خطاء فالله غفار.
-</p>
-<p>الشَّكُورُ: هو الذي يزكو عنده القليل من أعمال العباد، فيتقبلها ويضاعف أجرها.
-</p>
-<p>الْعَلِيُّ: هو الرفيع القدر فلا يحيط به وصف الواصفين المتعالي عن الأنداد والأضداد، فكل معاني العلو ثابتة له ذاتا وقهرا وشأنا.
-</p>
-<p>الْكَبِيرُ: هو العظيم الجليل ذو الكبرياء في صفاته وأفعاله فلا يحتاج إلى شيء ولا يعجزه شيء (ليس كمثله شيء).
-</p>
-<p>الْحَفِيظُ: هو الذي لا يغرب عن حفظه شيء ولو كمثقال الذر فحفظه لا يتبدل ولا يزول ولا يعتريه التبديل.
-</p>
-<p>المُقِيت: هو المتكفل بإيصال أقوات الخلق إليهم وهو الحفيظ والمقتدر والقدير والمقدر والممدد.
-</p>
-<p>الْحَسِيبُ: هو الكافي الذي منه كفاية العباد وهو الذي عليه الاعتماد يكفي العباد بفضله.
-</p>
-<p>الجليل: هو العظيم المطلق المتصف بجميع صفات الكمال والمنعوت بكمالها المنزه عن كل نقص.
-</p>
-<p>الْكَرِيمُ: هو الكثير الخير الجواد المعطي الذي لا ينفد عطاؤه وهو الكريم المطلق الجامع لأنواع الخير والشرف والفضائل المحمود بفعاله.
-الرَّقِيبُ: هو الرقيب الذي يراقب أحوال العباد ويعلم أقوالهم ويحصي أعمالهم وهو الحافظ الذي لا يغيب عنه شيء.
-</p>
-<p>الْمُجِيبُ: هو الذي يجيب دعاء من دعاه، وسؤال من سأله، ويقابله بالعطاء والقبول، ولا يُسأل أحد سواه.
-</p>
-<p>الْوَاسِعُ: هو الذي وسع رزقه جميع خلقه، وسعت رحمته كل شيء المحيط بكل شيء.
-</p>
-<p>اَلْحَكِيمُ: هو المحق في تدبيره اللطيف في تقديره الخبير بحقائق الأمور العليم بحكمه المقدور فجميع خلقه وقضاه خير وحكمة وعدل.
-</p>
-<p>الْوَدُودُ: هو المحب لعباده، والمحبوب في قلوب أوليائه.
-</p>
-<p>الْمَجِيدُ: هو الله تمجَّد بفعاله، ومجَّده خلقه لعظمته، والمجيد هو واسع الكرم، ووصف نفسه بالمجيد وهو متضمن كثرة صفات كماله وسعتها، وعدم إحصاء الخلق لها، وسعة أفعاله وكثرة خيره ودوامه. وتعني أيضاً البالغ النهاية في المجد، الكثير الإحسان الجزيل العطاء العظيم البر. تمجد.
-</p>
-<p>الباعث*: هو باعث الخلق يوم القيامة، وباعث رسله إلى العباد، وباعث المعونة إلى العبد.
-</p>
-<p>الشَّهِيدُ: هو الحاضر الذي لا يغيب عنه شيء، فهو المطلع على كل شيء مشاهد له عليم بتفاصيله.
-</p>
-<p>الْحَقُّ: هو الذي يحق الحق بكلماته ويؤيد أولياءه فهو المستحق للعبادة.
-</p>
-<p>الْوَكِيلُ: هو الكفيل بالخلق القائم بأمورهم فمن توكل عليه تولاه وكفاه، ومن استغنى به أغناه وأرضاه.
-</p>
-<p>الْقَوِيّ: هو صاحب القدرة التامة البالغة الكمال غالب لا يُغلب فقوته فوق كل قوة، ولا يرد قضاءه راد، ينفذ أمره، ويمضي قضاؤه في خلقه، شديد عقابه لمن كفر بآياته وجحد حججه.
-</p>
-<p>الْمَتِينُ: هو الشديد الذي لا يحتاج في إمضاء حكمه إلى جند أو مدد ولا إلى معين، فهو المتناهي في القوة، التي لا تلحق أفعاله مشقة، ولا يمسه فيها لغوب.
-</p>
-<p>الْوَلِيُّ: هو المحب الناصر لمن أطاعه، ينصر أولياءه، ويقهر أعداءه، والمتولي الأمور الخلائق ويحفظهم.
-</p>
-<p>الْحَمِيدُ: هو المستحق للحمد والثناء له منتهى الحمد وأطيبه على ذاته وصفاته وعلى نعمه التي لا تحصى.
-</p>
-<p>الْـمُحصِي*: هو الذي أحصى كل شيء بعلمه، فلا يفوته منها دقيق ولا جليل.
-</p>
-<p>المبدئ*: هو الذي أنشأ الأشياء، واخترعها ابتداء من غير سابق مثال.
-</p>
-<p>المعيد*: هو الذي يعيد الخلق بعد الحياة إلى الممات في الدنيا، وبعد الممات إلى الحياة يوم القيامة.
-</p>
-<p>المُحيي: هو خالق الحياة ومعطيها لمن شاء، يحيي الخلق من العدم ثم يحييهم بعد الموت.
-</p>
-<p>المميت*: هو مقدر الموت على كل من أماته ولا مميت سواه، قهر عباده بالموت متى شاء وكيف شاء.
-</p>
-<p>الْحَيُّ: هو المتصف بالحياة الأبدية التي لا بداية لها ولا نهاية فهو الباقي أزلا وأبدا وهو الحي الذي لا يموت.
-</p>
-<p>الْقَيُّومُ: هو القائم بنفسه، الغني عن غيره، وهو القائم بتدبير أمر خلقه في إنشائهم ورزقهم.
-</p>
-<p>الواجد*: هو الذي لا يعوزه شيء ولا يعجزه شيء يجد كل ما يطلبه، ويدرك كل ما يريده.
-</p>
-<p>الماجد*: هو الذي له الكمال المتناهي والعز الباهي، له العز في الأوصاف والأفعال الذي يعامل العباد بالجود والرحمة.
-</p>
-<p>الْوَاحِدُ: هو الفرد المتفرد في ذاته وصفائه وأفعاله، واحد في ملكه لا ينازعه أحد، لا شريك له سبحانه.
-</p>
-<p>الصَّمَدُ: هو المطاع الذي لا يقضى دونه أمر، الذي يقصد إليه في الحوائج فهو مقصد عباده في مهمات دينهم ودنياهم.
-</p>
-<p>الْقَادِرُ: هو الذي يقدر على إيجاد المعدوم وإعدام الموجود على قدر ما تقتضي الحكمة، لا زائدا عليه ولا ناقصا عنه.
-</p>
-<p>الْمُقْتَدِرُ: هو الذي يقدر على إصلاح الخلائق على وجه لا يقدر عليه غيره.
-</p>
-<p></p>
-<p>الْمُقَدِّمُ: هو الذي يقدم الأشياء ويضعها في مواضعها، فمن استحق التقديم قدمه.
-</p>
-<p>الْمُؤَخِّرُ: هو الذي يؤخر الأشياء فيضعها في مواضعها المؤخر لمن شاء من الفجار والكفار وكل من يستحق التأخير.
-</p>
-<p>الْأَوَّلُ: هو الذي لم يسبقه في الوجود شيء فهو أول قبل الوجود.
-</p>
-<p>الْآخِرُ: هو الباقي بعد فناء خلقه، البقاء الأبدي يفنى الكل وله البقاء وحده، فليس بعده شيء.
-</p>
-<p>الظَّاهِرُ: هو الذي ظهر فوق كل شيء وعلا عليه، الظاهر وجوده لكثرة دلائله.
-</p>
-<p>الْبَاطِنُ: هو العالم ببواطن الأمور وخفاياها، وهو أقرب إلينا من حبل الوريد.
-</p>
-<p>الوالي*: هو المالك للأشياء المتصرف فيها بمشيئته وحكمته، ينفذ فيها أمره، ويجري عليها حكمه.
-</p>
-<p>الْمُتَعَالِ: هو الذي جل عن إفك المفترين، وتنزه عن وساوس المتحيرين.
-</p>
-<p>الْبَرُّ: هو العطوف على عباده ببره ولطفه، ومن على السائلين بحسن عطائه، وهو الصدق فيما وعد.
-</p>
-<p>التَّوَّابُ: هو الذي يوفق عباده للتوبة حتى يتوب عليهم ويقبل توبتهم فيقابل الدعاء بالعطاء، والتوبة بغفران الذنوب.
-</p>
-<p>الْمُنْتَقِمُ: هو الذي يقصم ظهور الطغاة، ويشدد العقوبة على العصاة، وذلك بعد الإعذار والإنذار.
-</p>
-<p>العَفُو: هو الذي يترك المؤاخذة على الذنوب ولا يذكرك بالعيوب فهو يمحو السيئات ويتجاوز عن المعاصي.
-</p>
-<p>الرَّؤُوفُ: هو المتعطف على المذنبين بالتوبة، الذي جاد بلطفه ومَنَّ بتعطفه، يستر العيوب ثم يعفو عنها.
-</p>
-<p>مَالِكُ الْمُلْكِ: هو المتصرف في ملكه كيف يشاء لا راد لحكمه، ولا معقب لأمره.
-</p>
-<p>ذُو الْجَلَالِ والْإكْرَامِ: هو المنفرد بصفات الجلال والكمال والعظمة، المختص بالإكرام والكرامة وهو أهل لأن يجل.
-</p>
-<p>المقسط*: هو العادل في حكمه، الذي ينتصف للمظلوم من الظالم، ثم يكمل عدله فيرضي الظالم بعد إرضاء المظلوم.
-</p>
-<p>الْجَامِعُ: هو الذي جمع الكمالات كلها، ذاتا ووصفا وفعلا، الذي يجمع بين الخلائق المتماثلة والمتباينة، والذي يجمع الأولين والآخرين.
-</p>
-<p>الْغَنِيُّ: هو الذي لا يحتاج إلى شيء، وهو المستغني عن كل ما سواه، المفتقر إليه كل من عاداه.
-</p>
-<p>المغني*: هو معطي الغنى لعباده، يغني من يشاء غناه، وهو الكافي لمن شاء من عباده.
-</p>
-<p>الْمُعْطِي المانع*: هو الذي أعطى كل شيء، ويمنع العطاء عن من يشاء ابتلاء أو حماية.
-</p>
-<p>الضار* النافع*: هو المقدر للضر على من أراد كيف أراد، والمقدر النفع والخير لمن أراد كيف أراد كل ذلك على مقتضى حكمته سبحانه.
-</p>
-<p>النُّورُ: هو الهادي الرشيد الذي يرشد بهدايته من يشاء فيبين له الحق، ويلهمه اتباعه، الظاهر في ذاته، المظهر لغيره.
-</p>
-<p>الْهَادِي: هو المبين للخلق طريق الحق بكلامه يهدي القلوب إلى معرفته، والنفوس إلى طاعته.
-</p>
-<p>الْبَدِيعُ: هو الذي لا يماثله أحد في صفاته ولا في حكم من أحكامه، أو أمر من أموره، فهو المحدث الموجد على غير مثال.
-</p>
-<p>الباقي*: هو وحده له البقاء، الدائم الوجود الموصوف بالبقاء الأزلي، غير قابل للفناء فهو الباقي بلا انتهاء.
-</p>
-<p>الْوَارِثُ: هو الأبقى الدائم الذي يرث الخلائق بعد فناء الخلق، وهو يرث الأرض ومن عليها.
-</p>
-<p>الرشيد*: هو الذي أسعد من شاء بإرشاده، وأشقى من شاء بإبعاده، عظيم الحكمة بالغ الرشاد.
-</p>
-<p>الصبور*: هو الحليم الذي لا يعاجل العصاة بالنقمة، بل يعفو ويؤخر، ولا يسرع بالفعل قبل أوانه.
-</p>
-<p>أبرز فضائل أسماء الله الحسنى:
-</p>
-<p>دخول الجنة: قال النبي ﷺ: "إن لله تسعة وتسعين اسمًا، مائة إلا واحدًا، من أحصاها دخل الجنة".
-إجابة الدعاء: هي أعظم وسيلة للتقرب إلى الله ودعائه بها، كما في قوله تعالى: "وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَىٰ فَادْعُوهُ بِهَا".
-</p>
-<p>معرفة الله تعالى: تُعرّف العبد بربه، وتورث محبته وخشيته وتعظيمه، مما يصحح العبادة.
-</p>
-<p>أصل كل عبادة: معرفة الله بأسمائه هي أول فرض فرضه الله على خلقه.
-</p>
-<p>شفاء القلوب وتفريج الهموم: ذكرها وفهم معانيها يُذهب الهم والحزن ويجلب الطمأنينة. 
-</p>
-<body style="background-color: beige;"></body>
-<p style="text-align:center; font-size:24px;">
-اللهم تقبّل منا واجعل هذا العمل في ميزان حسناتنا 🤍
-</p>
 
+<header>
+  <span class="moon-icon">☽</span>
+  <h1>أذكار المسلم</h1>
+  <p>حصن المسلم من كتاب وسنة</p>
+  <div class="divider"></div>
+</header>
 
+<div class="tabs">
+  <button class="tab-btn active" onclick="showSection('sabah')">🌅 أذكار الصباح</button>
+  <button class="tab-btn" onclick="showSection('masaa')">🌙 أذكار المساء</button>
+</div>
 
+<div class="content">
 
+  <!-- أذكار الصباح -->
+  <div class="section active" id="sabah">
+    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+    <div class="section-title">أذكار الصباح</div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">١</div>
+      <div class="zikr-text">أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذَا الْيَوْمِ وَخَيْرَ مَا بَعْدَهُ، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذَا الْيَوْمِ وَشَرِّ مَا بَعْدَهُ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">مرة واحدة</span>
+        <button class="counter-btn" onclick="countZikr(this, 1)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">٢</div>
+      <div class="zikr-text">اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">مرة واحدة</span>
+        <button class="counter-btn" onclick="countZikr(this, 1)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">٣</div>
+      <div class="zikr-text">اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">مرة واحدة</span>
+        <button class="counter-btn" onclick="countZikr(this, 1)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">٤</div>
+      <div class="zikr-text">اللَّهُمَّ إِنِّي أَصْبَحْتُ أُشْهِدُكَ، وَأُشْهِدُ حَمَلَةَ عَرْشِكَ، وَمَلَائِكَتَكَ، وَجَمِيعَ خَلْقِكَ، أَنَّكَ أَنْتَ اللَّهُ لَا إِلَهَ إِلَّا أَنْتَ وَحْدَكَ لَا شَرِيكَ لَكَ، وَأَنَّ مُحَمَّدًا عَبْدُكَ وَرَسُولُكَ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">أربع مرات</span>
+        <button class="counter-btn" onclick="countZikr(this, 4)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">٥</div>
+      <div class="zikr-text">اللَّهُمَّ مَا أَصْبَحَ بِي مِنْ نِعْمَةٍ أَوْ بِأَحَدٍ مِنْ خَلْقِكَ، فَمِنْكَ وَحْدَكَ لَا شَرِيكَ لَكَ، فَلَكَ الْحَمْدُ وَلَكَ الشُّكْرُ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">مرة واحدة</span>
+        <button class="counter-btn" onclick="countZikr(this, 1)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">٦</div>
+      <div class="zikr-text">اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لَا إِلَهَ إِلَّا أَنْتَ. اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ، وَأَعُوذُ بِكَ مِنَ الْفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، لَا إِلَهَ إِلَّا أَنْتَ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">ثلاث مرات</span>
+        <button class="counter-btn" onclick="countZikr(this, 3)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">٧</div>
+      <div class="zikr-text">حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">سبع مرات</span>
+        <button class="counter-btn" onclick="countZikr(this, 7)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">٨</div>
+      <div class="zikr-text">بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">ثلاث مرات</span>
+        <button class="counter-btn" onclick="countZikr(this, 3)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">٩</div>
+      <div class="zikr-text">رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ نَبِيًّا.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">ثلاث مرات</span>
+        <button class="counter-btn" onclick="countZikr(this, 3)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">١٠</div>
+      <div class="zikr-text">لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">مئة مرة</span>
+        <button class="counter-btn" onclick="countZikr(this, 100)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">١١</div>
+      <div class="zikr-text">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">مئة مرة</span>
+        <button class="counter-btn" onclick="countZikr(this, 100)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+  </div>
 
+  <!-- أذكار المساء -->
+  <div class="section" id="masaa">
+    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+    <div class="section-title">أذكار المساء</div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">١</div>
+      <div class="zikr-text">أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذِهِ اللَّيْلَةِ وَخَيْرَ مَا بَعْدَهَا.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">مرة واحدة</span>
+        <button class="counter-btn" onclick="countZikr(this, 1)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">٢</div>
+      <div class="zikr-text">اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ الْمَصِيرُ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">مرة واحدة</span>
+        <button class="counter-btn" onclick="countZikr(this, 1)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">٣</div>
+      <div class="zikr-text">اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">مرة واحدة</span>
+        <button class="counter-btn" onclick="countZikr(this, 1)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">٤</div>
+      <div class="zikr-text">اللَّهُمَّ إِنِّي أَمْسَيْتُ أُشْهِدُكَ، وَأُشْهِدُ حَمَلَةَ عَرْشِكَ، وَمَلَائِكَتَكَ، وَجَمِيعَ خَلْقِكَ، أَنَّكَ أَنْتَ اللَّهُ لَا إِلَهَ إِلَّا أَنْتَ وَحْدَكَ لَا شَرِيكَ لَكَ، وَأَنَّ مُحَمَّدًا عَبْدُكَ وَرَسُولُكَ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">أربع مرات</span>
+        <button class="counter-btn" onclick="countZikr(this, 4)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">٥</div>
+      <div class="zikr-text">اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لَا إِلَهَ إِلَّا أَنْتَ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">ثلاث مرات</span>
+        <button class="counter-btn" onclick="countZikr(this, 3)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">٦</div>
+      <div class="zikr-text">حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">سبع مرات</span>
+        <button class="counter-btn" onclick="countZikr(this, 7)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">٧</div>
+      <div class="zikr-text">بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">ثلاث مرات</span>
+        <button class="counter-btn" onclick="countZikr(this, 3)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">٨</div>
+      <div class="zikr-text">أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">ثلاث مرات</span>
+        <button class="counter-btn" onclick="countZikr(this, 3)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">٩</div>
+      <div class="zikr-text">اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">مرة واحدة</span>
+        <button class="counter-btn" onclick="countZikr(this, 1)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+    <div class="zikr-card">
+      <div class="zikr-number">١٠</div>
+      <div class="zikr-text">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ.</div>
+      <div class="zikr-footer">
+        <span class="zikr-count">مئة مرة</span>
+        <button class="counter-btn" onclick="countZikr(this, 100)">
+          <span class="counter-display">٠</span> تسبيح
+        </button>
+      </div>
+    </div>
 
+  </div>
+</div>
 
+<footer>
+  <p>جعله الله في ميزان حسناتك • محمد سعيد</p>
+</footer>
 
+<script>
+  const arabicNums = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
 
+  function toArabic(n) {
+    return String(n).split('').map(d => arabicNums[d] || d).join('');
+  }
 
+  function countZikr(btn, max) {
+    const display = btn.querySelector('.counter-display');
+    let current = parseInt(display.dataset.count || 0) + 1;
+    if (current > max) current = 0;
+    display.dataset.count = current;
+    display.textContent = toArabic(current);
 
+    if (current === max) {
+      btn.classList.add('done');
+      btn.querySelector('.counter-display').textContent = '✓';
+    } else {
+      btn.classList.remove('done');
+    }
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</body>
-</html>
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll
